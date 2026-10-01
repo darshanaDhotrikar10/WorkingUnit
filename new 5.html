@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc0">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"/&gt;
+    &lt;title&gt;Tabs with Forms&lt;/title&gt;
+
+    &lt;th:block th:insert="~{layout :: atlassianConnectResources}"&gt;&lt;/th:block&gt;
+    &lt;meta name="token" th:content="${atlassianConnectToken}"&gt;
+    &lt;script src="https://connect-cdn.atl-paas.net/all.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script src="https://connect-cdn.atl-paas.net/all-debug.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        .tab-active {
+          border-bottom: 2px solid #2563eb;
+          color: #2563eb;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="bg-white rounded-md shadow-lg w-[500px] h-[500px] flex flex-col border border-gray-200"&gt;
+    &lt;div class="flex justify-between items-center p-4 border-b shrink-0"&gt;
+        &lt;h2 class="text-xl font-semibold text-gray-800"&gt;Collaborator Confluence Reviewer&lt;/h2&gt;
+        &lt;button onclick="AP.dialog.close();" class="color:#0253cc; font-size: 26px; text-xl"&gt;&amp;times;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="flex border-b text-sm font-medium text-gray-600 shrink-0"&gt;
+        &lt;button class="tab px-4 py-2 tab-active" onclick="showTab('upload', event)"&gt;Upload&lt;/button&gt;
+        &lt;button class="tab px-4 py-2" onclick="showTab('reviews', event)"&gt;Document reviews&lt;/button&gt;
+        &lt;button class="tab px-4 py-2" onclick="showTab('preferences', event)"&gt;Preferences&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Scrollable Content Area --&gt;
+    &lt;div class="overflow-y-auto p-4 flex-1"&gt;
+        &lt;div id="upload" class="tab-content space-y-6"&gt;
+            &lt;form class='aui collab-upload-form'&gt;
+                &lt;div id='selectVersionDiv'&gt;&lt;h3&gt;Select version&lt;/h3&gt;
+                    &lt;div&gt;
+                        &lt;input type='radio' id='currentVersion' name='selectVersion' value='currentVersion'&gt;
+                        &lt;label for='currentVersion'&gt;Upload latest changes&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;input type='radio' id='rangeVersion' name='selectVersion' value='rangeVersion'&gt;
+                        &lt;label for='rangeVersion'&gt;Upload selected versions&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div id='rangeVersionDiv' style='display: none'&gt;
+                        &lt;select class='version-select' name='versionBefore' id='versionBefore'&gt;
+                        &lt;/select&gt;
+                        &lt;select class='version-select' name='versionAfter' id='versionAfter'&gt;
+                        &lt;/select&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;h3&gt;Select a review&lt;/h3&gt;
+                &lt;div id='lastReviewDiv'&gt;
+                    &lt;input type='radio' id='lastReview' name='selectReview' value='lastReview'&gt;
+                    &lt;label for='lastReview'&gt;Upload to last review&lt;/label&gt;
+                    &lt;input type='hidden' id='existingReviewInput'/&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    &lt;input type='radio' id='newReview' name='selectReview' value='newReview'&gt;
+                    &lt;label for='newReview'&gt;Create new review&lt;/label&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    &lt;input type='radio' id='existingReview' name='selectReview' value='existingReview'&gt;
+                    &lt;label for='existingReview'&gt;Add to existing review&lt;/label&gt;
+                &lt;/div&gt;
+                &lt;div id='titleReviewDiv' class='create-review-div' style='display: none'&gt;
+                    &lt;label for='reviewTitle'&gt;Title&lt;/label&gt;
+                    &lt;input type='text' id='reviewTitle' name='reviewTitle' value='Untitle review'&gt;
+                &lt;/div&gt;
+                &lt;div id='existingReviewDiv' class='create-review-div' style='display: none'&gt;
+                    &lt;select id='existingReviewSelect' size='5'&gt;&lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div style='padding-top: 10px;'&gt;
+                    &lt;button id='create-review-submit-button' class='aui-button aui-button-primary'&gt;
+                        Upload to Collaborator
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id="reviews" class="tab-content hidden text-gray-600"&gt;
+        &lt;div class='review-table-empty'&gt;
+            &lt;p class='aui'&gt; No Collaborator reviews are associated with this document.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;table class='review-table'&gt;
+            &lt;tr&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Title&lt;/th&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Approved version&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+
+    &lt;div id="preferences" class="tab-content hidden text-gray-600"&gt;
+        &lt;div id='notloggedin' style='display: none'&gt;
+            &lt;form action='login' method='post' class='aui'
+                  style='float:none; display: inline-block; text-align: center;'&gt;
+                &lt;div class='field-group'&gt;
+                    &lt;label for='username'&gt;Username: &lt;/label&gt;
+                    &lt;input type='text' id='username' class='text' placeholder='enter username'&gt;
+                &lt;/div&gt;
+                &lt;div class='field-group'&gt;
+                    &lt;label for='password'&gt;Password: &lt;/label&gt;
+                    &lt;input type='password' name='password' id='password' class='text'
+                           placeholder='enter password'&gt;
+                &lt;/div&gt;
+                &lt;button id='sign-in-collab-button' class='aui-button aui-button-primary'&gt;Sign in&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;div id='loggedin' style='display: none'&gt;
+            &lt;label&gt;You are already logged in. &lt;/label&gt;
+            &lt;div style="padding-top: 10px;"&gt;
+                &lt;button id='logout-button' class='aui-button aui-button-primary'&gt;Log Out&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id='notconfigured' style='display: none'&gt;&lt;label&gt;Integration is not configured yet. Please contact your
+            administrator&lt;/label&gt;&lt;/div&gt;
+        &lt;div id='sign-in-collab-problem'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Footer --&gt;
+    &lt;div class="flex justify-between items-center p-4 border-t shrink-0"&gt;
+        &lt;h4 class="text-xl font-semibold text-gray-800"&gt;Collaborator user:&lt;/h4&gt;&lt;span id='currentUsername'&gt;somedata&lt;/span&gt;
+        &lt;button onclick="AP.dialog.close();" class="text-blue-600 hover:underline"&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+
+
+&lt;!-- Tabs Navigation --&gt;
+
+
+&lt;div class='collab-not-configured'&gt;&lt;/div&gt;
+
+&lt;aui-spinner size='large' class='collab-create-review-spinner'&gt;&lt;/aui-spinner&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</span></div></body>
+</html>

@@ -1,0 +1,3 @@
+curl --request GET \
+  --url 'https://mysmartqatest.atlassian.net/wiki/rest/api/user/email?accountId=712020:adb4f807-43d2-4aa9-9e2f-5fe18e0240d3' \
+  --header 'Accept: application/json'
