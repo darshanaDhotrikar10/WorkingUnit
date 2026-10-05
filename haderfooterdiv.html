@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin message toggle</title>
+
+<style>
+.adminMessageContainer {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 400px;
+    cursor: pointer;
+}
+
+.messageScrollingBlock {
+    margin-top: 10px;
+    padding: 8px;
+    border-top: 1px solid #ddd;
+    display: none;
+}
+
+.toggleIcon {
+    margin-right: 6px;
+}
+</style>
+</head>
+<body>
+<div>
+<div class="adminMessageContainer" onclick="toggleAdminMsg(this)">
+
+    <h2>
+        <span class="toggleIcon">►</span>
+        System message
+    </h2>
+
+    <div class="messageScrollingBlock">
+        This is the message content.<br>
+        It opens and closes when you click the whole admin message container.
+    </div>
+
+</div>
+
+<script>
+function toggleAdminMsg(container) {
+
+    var content = container.querySelector(".messageScrollingBlock");
+    var icon    = container.querySelector(".toggleIcon");
+
+    if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▼";
+    } else {
+        content.style.display = "none";
+        icon.textContent = "►";
+    }
+}
+</script>
+</div>
+</body>
+</html>
